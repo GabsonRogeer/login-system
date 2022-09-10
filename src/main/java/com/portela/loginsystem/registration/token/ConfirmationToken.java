@@ -1,5 +1,6 @@
 package com.portela.loginsystem.registration.token;
 
+import com.portela.loginsystem.appuser.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,13 +36,21 @@ public class ConfirmationToken {
     @Column(nullable = false)
     private LocalDateTime confirmedAt;
 
+    @ManyToOne
+    @JoinColumn(nullable = false,
+            name = "app_user_id"
+    )
+    private AppUser appUser;
+
     public ConfirmationToken(String token,
                              LocalDateTime createdAt,
                              LocalDateTime expiresAt,
-                             LocalDateTime confirmedAt) {
+                             LocalDateTime confirmedAt,
+                             AppUser appUser) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
         this.confirmedAt = confirmedAt;
+        this.appUser = appUser;
     }
 }
