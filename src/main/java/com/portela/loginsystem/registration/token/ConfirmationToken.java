@@ -1,5 +1,6 @@
 package com.portela.loginsystem.registration.token;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.portela.loginsystem.appuser.AppUser;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
 public class ConfirmationToken {
 
     @SequenceGenerator(
@@ -33,10 +35,10 @@ public class ConfirmationToken {
     @Column(nullable = false)
     private LocalDateTime expiresAt;
 
-    @Column(nullable = false)
     private LocalDateTime confirmedAt;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(nullable = false,
             name = "app_user_id"
     )
@@ -45,12 +47,10 @@ public class ConfirmationToken {
     public ConfirmationToken(String token,
                              LocalDateTime createdAt,
                              LocalDateTime expiresAt,
-                             LocalDateTime confirmedAt,
                              AppUser appUser) {
         this.token = token;
         this.createdAt = createdAt;
         this.expiresAt = expiresAt;
-        this.confirmedAt = confirmedAt;
         this.appUser = appUser;
     }
 }
